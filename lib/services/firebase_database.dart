@@ -1,17 +1,16 @@
-import 'package:article_app_v4/helper/constants.dart';
+
 import 'package:article_app_v4/helper/helper_prefs.dart';
-import 'package:article_app_v4/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseMethod {
   var _storage = FirebaseStorage.instance;
 
+  CollectionReference _reference =
+      FirebaseFirestore.instance.collection('users');
+
   Future saveUserInfo(String uid, userMap) async {
-    return await FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .set(userMap);
+    return await _reference.doc(uid).set(userMap);
   }
 
   Future<bool> deleteArticle(docId) async {
@@ -74,11 +73,9 @@ class DatabaseMethod {
 
   Future saveArticle(uid, articleMap) async {
     try {
-      CollectionReference article = FirebaseFirestore.instance
-          .collection("users")
-          .doc(uid)
-          .collection('articles');
-      await article.add(articleMap);
+      CollectionReference article =
+          FirebaseFirestore.instance.collection('articles');
+      await article.doc(uid).set(articleMap);
       return article;
     } catch (e) {
       print(e);
@@ -133,7 +130,6 @@ class DatabaseMethod {
   getPublishedArticles() async {
     try {
       return FirebaseFirestore.instance
-          
           .collection("articles")
           .orderBy('dateCreated', descending: true)
           .get()
