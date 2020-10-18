@@ -101,6 +101,7 @@ class _WriteArticleState extends State<WriteArticle> {
       ),
       body: CustomScrollView(slivers: [
         SliverFillRemaining(
+          hasScrollBody: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

@@ -110,6 +110,7 @@ class _EditArticleState extends State<EditArticle> {
       ),
       body: CustomScrollView(slivers: [
         SliverFillRemaining(
+          hasScrollBody: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
